@@ -39,7 +39,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Регистрация', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Авторизация', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = ['label' => 'Купить товар', 'url' => ['/product']];
+        $menuItems[] = ['label' => 'Купить товар', 'url' => ['/buy-product']];
         $menuItems[] = ['label' => 'Список чеков', 'url' => ['/invoice']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
