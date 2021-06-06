@@ -76,7 +76,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if (Yii::$app->user->isGuest) {
-            $this->redirect(Url::to(['/site/login']));
+            $this->redirect(Url::to(['/site/about']));
         }
 
         return $this->render('index');

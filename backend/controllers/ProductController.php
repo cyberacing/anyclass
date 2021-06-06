@@ -3,12 +3,13 @@ declare(strict_types=1);
 
 namespace backend\controllers;
 
-use Yii;
-use common\models\Product;
 use backend\models\ProductSearch;
+use common\models\Product;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -21,6 +22,16 @@ class ProductController extends Controller
     public function behaviors() : array
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

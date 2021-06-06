@@ -134,6 +134,20 @@ class Invoice extends \yii\db\ActiveRecord
     }
 
     /**
+     * @param float $amount
+     * @param string $currency
+     * @param bool $saveImmediate
+     *
+     * @throws Exception
+     */
+    public function handleAmountCurrency(float $amount, string $currency, bool $saveImmediate = false) : void
+    {
+        $this->amount = $amount;
+        $this->currency = $currency;
+        $this->saveImmediate($saveImmediate);
+    }
+
+    /**
      * @param bool $saveImmediate
      *
      * @throws Exception

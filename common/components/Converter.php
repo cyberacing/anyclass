@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 namespace common\components;
 
+use common\models\PaymentSystem;
+use common\models\Product;
 use RuntimeException;
 use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 /**
  * Class Converter
@@ -16,15 +19,15 @@ use yii\helpers\ArrayHelper;
 class Converter extends Component
 {
     /** @var string */
+    private const CACHE_KEY = 'v2';
+    /** @var string */
     public string $defaultCurrency = 'RUB';
     /** @var array */
-    public array $currencies;
+    public array $codes;
     /** @var string */
-    public string $cbrUrl = 'http://www.cbr.ru/scripts/XML_daily.asp';
+    private string $cbrUrl = 'http://www.cbr.ru/scripts/XML_daily.asp';
     /** @var array */
-    public array $data = [];
-    /** @var string */
-    public const CACHE_KEY = 'v1';
+    private array $data = [];
 
     /**
      * @throws \Exception
@@ -60,12 +63,12 @@ class Converter extends Component
         if(!is_array($data)) {
             $cbrXml = simplexml_load_file($this->cbrUrl);
             foreach ($cbrXml as $valute) {
-                if (in_array($valute->CharCode, $this->currencies)) {
+                if (in_array($valute->CharCode, $this->codes)) {
                     $this->data[(string)$valute->CharCode] = [
                         'CharCode' => (string)$valute->CharCode,
                         'Name' => (string)$valute->Name,
-                        'Nominal' => (string)$valute->Nominal,
-                        'Value' => (string)$valute->Value,
+                        'Nominal' => (int)$valute->Nominal,
+                        'Value' => (float)str_replace(',', '.', $valute->Value),
                     ];
                 }
             }
@@ -73,6 +76,20 @@ class Converter extends Component
         } else {
             $this->data = $data;
         }
+    }
+
+    /**
+     * @param string $code
+     *
+     * @return mixed
+     */
+    public function getData(string $code)
+    {
+        if (!$this->data[$code]) {
+            throw new RuntimeException('Неправильный код валюты');
+        }
+
+        return $this->data[$code];
     }
 
     /**
@@ -95,6 +112,27 @@ class Converter extends Component
     public function currencies() : array
     {
         return ArrayHelper::map($this->data, 'CharCode', 'Name');
+    }
+
+    /**
+     * @param Product $product
+     * @param PaymentSystem $paymentSystem
+     *
+     * @return array
+     */
+    public function convert(Product $product, PaymentSystem $paymentSystem) : array
+    {
+        $result = [
+            'amount' => $product->price,
+            'currency' => $product->currency,
+        ];
+
+        if (!in_array($product->currency, Json::decode($paymentSystem->currencies))) {
+            $result['amount'] = $product->price * $this->data[$product->currency]['Value'] / $this->data[$product->currency]['Nominal'];
+            $result['currency'] = $this->defaultCurrency;
+        }
+
+        return $result;
     }
 
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 use common\models\PaymentSystem;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Json;
 
 /* @var yii\web\View $this */
 /* @var backend\models\PaymentSystemSearch $searchModel */
@@ -32,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'currencies',
                 'value' => function (PaymentSystem $row) {
-                    return implode(',', $row->currencies);
+                    return implode(',', Json::decode($row->currencies));
                 },
                 'format' => 'raw',
             ],

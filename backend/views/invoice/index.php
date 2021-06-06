@@ -37,7 +37,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
-            'amount',
+            [
+                'attribute' => 'amount',
+                'value' => function (Invoice $row) {
+                    return Yii::$app->formatter->asDecimal($row->amount, 2);
+                },
+                'format' => 'raw',
+            ],
             [
                 'attribute' => 'currency',
                 'value' => function (Invoice $row) {

@@ -6,6 +6,8 @@ namespace backend\controllers;
 use Yii;
 use common\models\PaymentSystem;
 use backend\models\PaymentSystemSearch;
+use yii\filters\AccessControl;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,6 +23,16 @@ class PaymentSystemController extends Controller
     public function behaviors() : array
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -95,6 +107,7 @@ class PaymentSystemController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $model->currencies = Json::decode($model->currencies);
         return $this->render('update', [
             'model' => $model,
         ]);

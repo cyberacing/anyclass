@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use common\models\PaymentSystem;
 use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\widgets\DetailView;
 
 /* @var yii\web\View $this */
@@ -37,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'currencies',
                 'value' => function (PaymentSystem $model) {
-                    return implode(',', $model->currencies);
+                    return implode(',', Json::decode($model->currencies));
                 },
                 'format' => 'raw',
             ],

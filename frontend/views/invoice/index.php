@@ -32,7 +32,13 @@ $this->title = 'Invoices';
                 },
                 'format' => 'raw',
             ],
-            'amount',
+            [
+                'attribute' => 'amount',
+                'value' => function (Invoice $row) {
+                    return Yii::$app->formatter->asDecimal($row->amount, 2);
+                },
+                'format' => 'raw',
+            ],
             'currency',
             'created_at',
         ],

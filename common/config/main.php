@@ -17,7 +17,7 @@ return [
         ],
         'converter' => [
             'class' => 'common\components\Converter',
-            'currencies' => ['USD', 'EUR', 'CNY', 'INR'],
+            'codes' => ['USD', 'EUR', 'CNY', 'INR'],
         ]
     ],
 ];

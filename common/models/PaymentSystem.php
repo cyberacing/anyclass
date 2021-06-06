@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace common\models;
 
+use app\helpers\sanitizers\DataSanitizer;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "payment_system".
@@ -66,6 +68,23 @@ class PaymentSystem extends \yii\db\ActiveRecord
                 'value' => new Expression('NOW()'),
             ],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     * @return bool
+     */
+    public function load($data, $formName = null) : bool
+    {
+        if (parent::load($data, $formName)) {
+            if (!empty($this->currencies)) {
+                $this->currencies = Json::encode($this->currencies);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

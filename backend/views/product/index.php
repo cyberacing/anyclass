@@ -28,7 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            'price',
+            [
+                'attribute' => 'price',
+                'value' => function (Product $row) {
+                    return Yii::$app->formatter->asDecimal($row->price, 2);
+                },
+                'format' => 'raw',
+            ],
             [
                 'attribute' => 'currency',
                 'value' => function (Product $row) {

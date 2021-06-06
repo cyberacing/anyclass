@@ -53,13 +53,16 @@ class BuyProductForm extends Model
     {
         $user = Yii::$app->user->identity;
         $product = Product::findOne(['id' => $this->productId]);
+        $paymentSystem = PaymentSystem::findOne(['id' => $this->paymentSystemId]);
 
         /** @var Invoice $invoice */
         $invoice = Yii::createObject([
             'class' => Invoice::class,
         ]);
         $invoice->handleUser($user);
-        $invoice->handleProduct($product, true);
+        $invoice->handleProduct($product);
+        $amountCurrency = Yii::$app->converter->convert($product, $paymentSystem);
+        $invoice->handleAmountCurrency($amountCurrency['amount'], $amountCurrency['currency'], true);
 
         return true;
     }
