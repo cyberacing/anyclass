@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'currency',
                 'value' => function (Product $model) {
-                    return Yii::$app->converter->nameByCode($model->currency);
+                    return Yii::$app->converter->getData($model->currency)['Name'];
                 },
                 'format' => 'raw',
             ],

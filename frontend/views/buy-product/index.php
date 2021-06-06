@@ -1,9 +1,6 @@
 <?php /** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
-use common\models\Invoice;
-use yii\data\ArrayDataProvider;
-use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 

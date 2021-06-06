@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \frontend\models\SignupForm */
+/* @var yii\web\View $this */
+/* @var yii\bootstrap\ActiveForm $form */
+/* @var frontend\models\SignupForm $model */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;

@@ -17,6 +17,7 @@ return [
         ],
         'converter' => [
             'class' => 'common\components\Converter',
+            'defaultCurrency' => 'RUB',
             'codes' => ['USD', 'EUR', 'CNY', 'INR'],
         ]
     ],

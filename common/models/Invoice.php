@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace common\models;
 
 use Exception;
-use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use yii\db\Expression;
 
 /**
@@ -22,7 +22,7 @@ use yii\db\Expression;
  * @property Product $product
  * @property User $user
  */
-class Invoice extends \yii\db\ActiveRecord
+class Invoice extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -35,7 +35,7 @@ class Invoice extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             [['product_id', 'user_id', 'currency'], 'required'],
@@ -81,19 +81,19 @@ class Invoice extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Product]].
      *
-     * @return \yii\db\ActiveQuery|ProductQuery
+     * @return \yii\db\ActiveQuery
      */
-    public function getProduct()
+    public function getProduct() : \yii\db\ActiveQuery
     {
-        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+        return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 
     /**
      * Gets query for [[User]].
      *
-     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getUser() : \yii\db\ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
@@ -128,8 +128,6 @@ class Invoice extends \yii\db\ActiveRecord
     public function handleProduct(Product $product, bool $saveImmediate = false) : void
     {
         $this->product_id = $product->id;
-        $this->amount = $product->price;
-        $this->currency = $product->currency;
         $this->saveImmediate($saveImmediate);
     }
 

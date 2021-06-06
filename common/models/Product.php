@@ -89,7 +89,7 @@ class Product extends \yii\db\ActiveRecord
      * {@inheritdoc}
      * @return ProductQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find() : ProductQuery
     {
         return new ProductQuery(get_called_class());
     }

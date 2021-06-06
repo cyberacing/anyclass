@@ -1,11 +1,13 @@
 <?php
+declare(strict_types=1);
+
 namespace backend\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use backend\models\LoginForm;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
 
 /**
  * Site controller
@@ -15,11 +17,11 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
+    public function behaviors() : array
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'actions' => ['login', 'error'],
@@ -34,7 +36,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
 
@@ -46,7 +48,7 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function actions()
+    public function actions() : array
     {
         return [
             'error' => [
@@ -60,7 +62,7 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex() : string
     {
         return $this->render('index');
     }
@@ -68,7 +70,7 @@ class SiteController extends Controller
     /**
      * Login action.
      *
-     * @return string
+     * @return string|\yii\web\Response
      */
     public function actionLogin()
     {
@@ -93,9 +95,9 @@ class SiteController extends Controller
     /**
      * Logout action.
      *
-     * @return string
+     * @return \yii\web\Response
      */
-    public function actionLogout()
+    public function actionLogout() : \yii\web\Response
     {
         Yii::$app->user->logout();
 

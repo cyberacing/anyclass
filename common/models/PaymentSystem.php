@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace common\models;
 
-use app\helpers\sanitizers\DataSanitizer;
-use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii\helpers\Json;
@@ -32,7 +30,7 @@ class PaymentSystem extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             [['title'], 'required'],
@@ -45,7 +43,7 @@ class PaymentSystem extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels() : array
     {
         return [
             'id' => 'ID',
@@ -91,7 +89,7 @@ class PaymentSystem extends \yii\db\ActiveRecord
      * {@inheritdoc}
      * @return PaymentSystemQuery the active query used by this AR class.
      */
-    public static function find()
+    public static function find() : PaymentSystemQuery
     {
         return new PaymentSystemQuery(get_called_class());
     }

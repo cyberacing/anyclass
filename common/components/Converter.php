@@ -21,7 +21,7 @@ class Converter extends Component
     /** @var string */
     private const CACHE_KEY = 'v2';
     /** @var string */
-    public string $defaultCurrency = 'RUB';
+    public string $defaultCurrency;
     /** @var array */
     public array $codes;
     /** @var string */
@@ -60,7 +60,7 @@ class Converter extends Component
     {
         $cacheKey = [Yii::$app->id, __METHOD__, self::CACHE_KEY];
         $data = Yii::$app->cache->get($cacheKey);
-        if(!is_array($data)) {
+        if (!is_array($data)) {
             $cbrXml = simplexml_load_file($this->cbrUrl);
             foreach ($cbrXml as $valute) {
                 if (in_array($valute->CharCode, $this->codes)) {
@@ -90,20 +90,6 @@ class Converter extends Component
         }
 
         return $this->data[$code];
-    }
-
-    /**
-     * @param string $code
-     *
-     * @return string
-     */
-    public function nameByCode(string $code) : string
-    {
-        if (!$this->data[$code]) {
-            throw new RuntimeException('Неправильный код валюты');
-        }
-
-        return $this->data[$code]['Name'];
     }
 
     /**

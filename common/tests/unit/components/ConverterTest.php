@@ -7,7 +7,6 @@ use Codeception\Test\Unit;
 use common\components\Converter;
 use common\models\PaymentSystem;
 use common\models\Product;
-use frontend\models\BuyProductForm;
 use Yii;
 use yii\helpers\Json;
 
@@ -44,33 +43,13 @@ class ConverterTest extends Unit
     /**
      *
      */
-    public function testNameByCode()
+    public function testGetData()
     {
-        $expectName = 'Российский рубль';
-        $nameByCode = $this->converter->nameByCode($this->converter->defaultCurrency);
-        self::assertEquals($expectName, $nameByCode);
-
-        $currencies = $this->converter->currencies();
-        if (array_key_exists('USD', $currencies)) {
-            $expectName = 'Доллар США';
-            $nameByCode = $this->converter->nameByCode('USD');
-            self::assertEquals($expectName, $nameByCode);
-        }
-        if (array_key_exists('EUR', $currencies)) {
-            $expectName = 'Евро';
-            $nameByCode = $this->converter->nameByCode('EUR');
-            self::assertEquals($expectName, $nameByCode);
-        }
-        if (array_key_exists('CNY', $currencies)) {
-            $expectName = 'Китайский юань';
-            $nameByCode = $this->converter->nameByCode('CNY');
-            self::assertEquals($expectName, $nameByCode);
-        }
-        if (array_key_exists('INR', $currencies)) {
-            $expectName = 'Индийских рупий';
-            $nameByCode = $this->converter->nameByCode('INR');
-            self::assertEquals($expectName, $nameByCode);
-        }
+        $data = $this->converter->getData($this->converter->defaultCurrency);
+        self::assertEquals($this->converter->defaultCurrency, $data['CharCode']);
+        self::assertEquals('Российский рубль', $data['Name']);
+        self::assertEquals('1', $data['Value']);
+        self::assertEquals('1', $data['Nominal']);
     }
 
     /**
@@ -115,6 +94,5 @@ class ConverterTest extends Unit
             self::assertEquals($price, $convert['amount']);
             self::assertEquals($this->converter->defaultCurrency, $convert['currency']);
         }
-
     }
 }

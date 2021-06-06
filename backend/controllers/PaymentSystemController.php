@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace backend\controllers;
 
-use Yii;
-use common\models\PaymentSystem;
 use backend\models\PaymentSystemSearch;
+use common\models\PaymentSystem;
+use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * PaymentSystemController implements the CRUD actions for PaymentSystem model.
@@ -34,7 +34,7 @@ class PaymentSystemController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
