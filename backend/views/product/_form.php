@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'price')->textInput() ?>
 
-    <?= $form->field($model, 'currency')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'currency')->dropDownList(Yii::$app->converter->currencies()) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

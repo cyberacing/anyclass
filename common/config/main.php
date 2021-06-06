@@ -6,7 +6,7 @@ return [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'name' => 'AnyClass - тестовое задание',
+    'name' => 'AnyClass - административная панель',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
         'cache' => [
@@ -15,5 +15,9 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
+        'converter' => [
+            'class' => 'common\components\Converter',
+            'currencies' => ['USD', 'EUR', 'CNY', 'INR'],
+        ]
     ],
 ];

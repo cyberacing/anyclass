@@ -1,6 +1,7 @@
 <?php /** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
+use common\models\PaymentSystem;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -28,7 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'active:boolean',
-            'currencies',
+            [
+                'attribute' => 'currencies',
+                'value' => function (PaymentSystem $row) {
+                    return implode(',', $row->currencies);
+                },
+                'format' => 'raw',
+            ],
             'created_at',
 
             ['class' => 'yii\grid\ActionColumn'],

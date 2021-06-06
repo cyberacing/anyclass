@@ -1,6 +1,7 @@
 <?php /** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
+use common\models\Product;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -28,7 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'price',
-            'currency',
+            [
+                'attribute' => 'currency',
+                'value' => function (Product $row) {
+                    return Yii::$app->converter->nameByCode($row->currency);
+                },
+                'format' => 'raw',
+            ],
             'created_at',
 
             ['class' => 'yii\grid\ActionColumn'],

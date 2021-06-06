@@ -11,6 +11,18 @@ namespace common\models;
 class PaymentSystemQuery extends \yii\db\ActiveQuery
 {
     /**
+     * @param bool $active
+     *
+     * @return $this
+     */
+    public function active(bool $active) : self
+    {
+        return $this->andWhere([
+            '[[active]]' => $active,
+        ]);
+    }
+
+    /**
      * {@inheritdoc}
      * @return PaymentSystem[]|array
      */

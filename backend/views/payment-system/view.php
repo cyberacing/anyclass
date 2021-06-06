@@ -1,6 +1,7 @@
 <?php /** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
+use common\models\PaymentSystem;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -33,7 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'active:boolean',
-            'currencies',
+            [
+                'attribute' => 'currencies',
+                'value' => function (PaymentSystem $model) {
+                    return implode(',', $model->currencies);
+                },
+                'format' => 'raw',
+            ],
             'created_at',
             'updated_at',
         ],

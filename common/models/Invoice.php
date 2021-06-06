@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace common\models;
 
+use Exception;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
@@ -94,7 +95,7 @@ class Invoice extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
@@ -104,5 +105,45 @@ class Invoice extends \yii\db\ActiveRecord
     public static function find()
     {
         return new InvoiceQuery(get_called_class());
+    }
+
+    /**
+     * @param User $user
+     * @param bool $saveImmediate
+     *
+     * @throws Exception
+     */
+    public function handleUser(User $user, bool $saveImmediate = false) : void
+    {
+        $this->user_id = $user->id;
+        $this->saveImmediate($saveImmediate);
+    }
+
+    /**
+     * @param Product $product
+     * @param bool $saveImmediate
+     *
+     * @throws Exception
+     */
+    public function handleProduct(Product $product, bool $saveImmediate = false) : void
+    {
+        $this->product_id = $product->id;
+        $this->amount = $product->price;
+        $this->currency = $product->currency;
+        $this->saveImmediate($saveImmediate);
+    }
+
+    /**
+     * @param bool $saveImmediate
+     *
+     * @throws Exception
+     */
+    protected function saveImmediate(bool $saveImmediate = false) : void
+    {
+        if ($saveImmediate === true) {
+            if (!$this->save()) {
+                throw new Exception($this, "Не удалось сохранить Invoice [user_id: {$this->user_id}]");
+            }
+        }
     }
 }

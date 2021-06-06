@@ -1,6 +1,7 @@
 <?php /** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
+use common\models\Product;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -33,7 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'price',
-            'currency',
+            [
+                'attribute' => 'currency',
+                'value' => function (Product $model) {
+                    return Yii::$app->converter->nameByCode($model->currency);
+                },
+                'format' => 'raw',
+            ],
             'created_at',
             'updated_at',
         ],

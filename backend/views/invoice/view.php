@@ -36,7 +36,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
             ],
             'amount',
-            'currency',
+            [
+                'attribute' => 'currency',
+                'value' => function (Invoice $model) {
+                    return Yii::$app->converter->nameByCode($model->currency);
+                },
+                'format' => 'raw',
+            ],
             'created_at',
             'updated_at',
         ],
