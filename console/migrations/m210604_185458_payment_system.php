@@ -19,8 +19,8 @@ class m210604_185458_payment_system extends Migration
             'title' => $this->string()->notNull()->comment('Название'),
             'active' => $this->boolean()->defaultValue(false)->comment('Активность'),
             'currencies' => $this->json()->comment('Список валют'),
-            'created_at' => $this->dateTime()->notNull()->comment('Создано'),
-            'updated_at' => $this->dateTime()->notNull()->comment('Обновлено'),
+            'created_at' => $this->integer()->notNull()->comment('Создано'),
+            'updated_at' => $this->integer()->notNull()->comment('Обновлено'),
         ]);
 
         return true;

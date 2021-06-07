@@ -12,6 +12,9 @@ use yii\data\ActiveDataProvider;
  */
 class ProductSearch extends Product
 {
+    /** @var string Дата */
+    public string $created_at = '';
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +22,8 @@ class ProductSearch extends Product
     {
         return [
             [['id'], 'integer'],
-            [['title', 'currency', 'created_at', 'updated_at'], 'safe'],
+            [['title', 'currency', 'updated_at'], 'safe'],
+            [['created_at'], 'string',],
             [['price'], 'number'],
         ];
     }
@@ -39,6 +43,7 @@ class ProductSearch extends Product
      * @param array $params
      *
      * @return ActiveDataProvider
+     * @throws \Exception
      */
     public function search(array $params) : ActiveDataProvider
     {
@@ -62,12 +67,14 @@ class ProductSearch extends Product
         $query->andFilterWhere([
             'id' => $this->id,
             'price' => $this->price,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['ilike', 'title', $this->title])
-              ->andFilterWhere(['ilike', 'currency', $this->currency]);
+        if (!empty($this->created_at)) {
+            $query->byCreatedAt($this->created_at);
+        }
+
+        $query->andFilterWhere(['ilike', 'title', $this->title]);
+        $query->filterCurrency($this->currency);
 
         return $dataProvider;
     }

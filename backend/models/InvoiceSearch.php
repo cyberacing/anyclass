@@ -12,15 +12,20 @@ use yii\data\ActiveDataProvider;
  */
 class InvoiceSearch extends Invoice
 {
+    /** @var string Дата */
+    public string $created_at = '';
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'product_id', 'user_id'], 'integer'],
+            [['id'], 'integer'],
+            [['product_id', 'user_id'], 'string', 'max' => 255],
+            [['created_at'], 'string',],
             [['amount'], 'number'],
-            [['currency', 'created_at', 'updated_at'], 'safe'],
+            [['currency', 'updated_at'], 'safe'],
         ];
     }
 
@@ -39,10 +44,11 @@ class InvoiceSearch extends Invoice
      * @param array $params
      *
      * @return ActiveDataProvider
+     * @throws \Exception
      */
     public function search(array $params) : ActiveDataProvider
     {
-        $query = Invoice::find();
+        $query = Invoice::find()->with(['product', 'user']);
 
         // add conditions that should always apply here
 
@@ -60,15 +66,18 @@ class InvoiceSearch extends Invoice
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'product_id' => $this->product_id,
-            'user_id' => $this->user_id,
+            'invoice.id' => $this->id,
             'amount' => $this->amount,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['ilike', 'currency', $this->currency]);
+        if (!empty($this->created_at)) {
+            $query->byCreatedAt($this->created_at);
+        }
+
+        $query->filterProduct((string)$this->product_id);
+        $query->filterUser((string)$this->user_id);
+
+        $query->filterCurrency($this->currency);
 
         return $dataProvider;
     }

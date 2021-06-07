@@ -104,6 +104,16 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * {@inheritdoc}
+     * @return UserQuery the active query used by this AR class.
+     * @throws \yii\base\InvalidConfigException
+     */
+    public static function find() : UserQuery
+    {
+        return new UserQuery(get_called_class());
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public static function findIdentity($id)
     {

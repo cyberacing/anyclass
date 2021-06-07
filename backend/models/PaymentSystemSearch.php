@@ -12,6 +12,9 @@ use yii\data\ActiveDataProvider;
  */
 class PaymentSystemSearch extends PaymentSystem
 {
+    /** @var string Дата */
+    public string $created_at = '';
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +22,8 @@ class PaymentSystemSearch extends PaymentSystem
     {
         return [
             [['id'], 'integer'],
-            [['title', 'currencies', 'created_at', 'updated_at'], 'safe'],
+            [['title', 'updated_at'], 'safe'],
+            [['created_at', 'currencies'], 'string',],
             [['active'], 'boolean'],
         ];
     }
@@ -39,6 +43,7 @@ class PaymentSystemSearch extends PaymentSystem
      * @param array $params
      *
      * @return ActiveDataProvider
+     * @throws \Exception
      */
     public function search(array $params) : ActiveDataProvider
     {
@@ -62,12 +67,13 @@ class PaymentSystemSearch extends PaymentSystem
         $query->andFilterWhere([
             'id' => $this->id,
             'active' => $this->active,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['ilike', 'title', $this->title])
-              ->andFilterWhere(['ilike', 'currencies', $this->currencies]);
+        if (!empty($this->created_at)) {
+            $query->byCreatedAt($this->created_at);
+        }
+
+        $query->andFilterWhere(['ilike', 'title', $this->title]);
 
         return $dataProvider;
     }

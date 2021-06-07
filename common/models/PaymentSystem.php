@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace common\models;
 
 use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
 use yii\helpers\Json;
 
 /**
@@ -14,8 +13,8 @@ use yii\helpers\Json;
  * @property string $title Название
  * @property bool|null $active Активность
  * @property string|null $currencies Список валют
- * @property string $created_at Создано
- * @property string $updated_at Обновлено
+ * @property int $created_at Создано
+ * @property int $updated_at Обновлено
  */
 class PaymentSystem extends \yii\db\ActiveRecord
 {
@@ -61,10 +60,7 @@ class PaymentSystem extends \yii\db\ActiveRecord
     public function behaviors() : array
     {
         return [
-            TimestampBehavior::class => [
-                'class' => TimestampBehavior::class,
-                'value' => new Expression('NOW()'),
-            ],
+            TimestampBehavior::class,
         ];
     }
 

@@ -9,6 +9,7 @@ use common\models\Product;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Class BuyProductForm
@@ -69,12 +70,17 @@ class BuyProductForm extends Model
 
     /**
      * @return array
+     * @throws ForbiddenHttpException
      */
     public function productsListData() : array
     {
         $productEmpty = ['' => ''];
 
         $products = Product::find()->asArray()->all();
+        if (!$products) {
+            Yii::error('Нет доступных товаров');
+            throw new ForbiddenHttpException('Нет доступных товаров');
+        }
         $productsById = ArrayHelper::map($products, 'id', 'title');
 
         return ArrayHelper::merge($productEmpty, $productsById);
@@ -82,12 +88,17 @@ class BuyProductForm extends Model
 
     /**
      * @return array
+     * @throws ForbiddenHttpException
      */
     public function paymentSystemListData() : array
     {
         $paymentSystemEmpty = ['' => ''];
 
         $paymentSystems = PaymentSystem::find()->active(true)->asArray()->all();
+        if (!$paymentSystems) {
+            Yii::error('Нет доступных платежных систем');
+            throw new ForbiddenHttpException('Нет доступных платежных систем');
+        }
         $paymentSystemsById = ArrayHelper::map($paymentSystems, 'id', 'title');
 
         return ArrayHelper::merge($paymentSystemEmpty, $paymentSystemsById);

@@ -209,6 +209,51 @@
       ),
       'reference' => 'dc960a912984efb74d0a90222870c72c87f10c91',
     ),
+    'kartik-v/yii2-bootstrap4-dropdown' => 
+    array (
+      'pretty_version' => 'v1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '394cb4f85d82522ec5918f1581bdad518b324498',
+    ),
+    'kartik-v/yii2-dialog' => 
+    array (
+      'pretty_version' => 'v1.0.5',
+      'version' => '1.0.5.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c38616d719f52530749457c022ca6134d0ad31ce',
+    ),
+    'kartik-v/yii2-grid' => 
+    array (
+      'pretty_version' => 'v3.3.5',
+      'version' => '3.3.5.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'e4ba0c68ecb864e1a158f16cc73a5e73a6cdf7c7',
+    ),
+    'kartik-v/yii2-krajee-base' => 
+    array (
+      'pretty_version' => 'v2.0.6',
+      'version' => '2.0.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9b6bc8335e8e561e3953826efefd57b1df7bdce0',
+    ),
+    'kartik-v/yii2-widget-datepicker' => 
+    array (
+      'pretty_version' => 'v1.4.7',
+      'version' => '1.4.7.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'aadeb08fe0199a62bb26940cdccafc2c169edc69',
+    ),
     'myclabs/deep-copy' => 
     array (
       'pretty_version' => '1.10.2',
@@ -341,12 +386,12 @@
     ),
     'phpunit/phpunit' => 
     array (
-      'pretty_version' => '8.5.15',
-      'version' => '8.5.15.0',
+      'pretty_version' => '8.5.16',
+      'version' => '8.5.16.0',
       'aliases' => 
       array (
       ),
-      'reference' => '038d4196d8e8cb405cd5e82cedfe413ad6eef9ef',
+      'reference' => 'cc66f2fc61296be66c99931a862200e7456b9a01',
     ),
     'psr/container' => 
     array (

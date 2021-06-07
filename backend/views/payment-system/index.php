@@ -1,9 +1,11 @@
 <?php /** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
+use backend\widgets\DatePicker;
 use common\models\PaymentSystem;
+use kartik\grid\DataColumn;
+use kartik\grid\GridView;
 use yii\helpers\Html;
-use yii\grid\GridView;
 use yii\helpers\Json;
 
 /* @var yii\web\View $this */
@@ -36,8 +38,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     return implode(',', Json::decode($row->currencies));
                 },
                 'format' => 'raw',
+                'filter' => false,
             ],
-            'created_at',
+            [
+                'class' => DataColumn::class,
+                'label' => 'Дата создания',
+                'attribute' => 'created_at',
+                'filterType' => DatePicker::class,
+                'format' => 'datetime',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

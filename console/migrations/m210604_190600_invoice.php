@@ -19,8 +19,8 @@ class m210604_190600_invoice extends Migration
             'user_id' => $this->integer()->notNull()->comment('Пользователь'),
             'amount' => $this->float()->comment('Сумма чека'),
             'currency' => $this->string(3)->notNull()->comment('Валюта чека'),
-            'created_at' => $this->dateTime()->notNull()->comment('Создано'),
-            'updated_at' => $this->dateTime()->notNull()->comment('Обновлено'),
+            'created_at' => $this->integer()->notNull()->comment('Создано'),
+            'updated_at' => $this->integer()->notNull()->comment('Обновлено'),
         ]);
 
         $this->addForeignKey('FK-invoice-product', '{{%invoice}}', 'product_id', '{{%product}}', 'id', 'RESTRICT', 'CASCADE');

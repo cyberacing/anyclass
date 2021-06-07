@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace common\models;
 
+use DateTimeImmutable;
+
 /**
  * This is the ActiveQuery class for [[PaymentSystem]].
  *
@@ -19,6 +21,25 @@ class PaymentSystemQuery extends \yii\db\ActiveQuery
     {
         return $this->andWhere([
             '[[active]]' => $active,
+        ]);
+    }
+
+    /**
+     * @param string $date
+     *
+     * @return $this
+     * @throws \Exception
+     */
+    public function byCreatedAt(string $date) : self
+    {
+        $dateTime = new DateTimeImmutable($date);
+        $dateTimeBegin = $dateTime->setTime(0, 0);
+        $dateTimeEnd = $dateTime->setTime(23, 59, 59);
+        return $this->andWhere([
+            'between',
+            'created_at',
+            $dateTimeBegin->getTimestamp(),
+            $dateTimeEnd->getTimestamp(),
         ]);
     }
 

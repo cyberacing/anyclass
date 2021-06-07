@@ -40,7 +40,7 @@ $this->title = 'Invoices';
                 'format' => 'raw',
             ],
             'currency',
-            'created_at',
+            'created_at:datetime',
         ],
     ]); ?>
 

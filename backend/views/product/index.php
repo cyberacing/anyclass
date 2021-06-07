@@ -2,8 +2,10 @@
 declare(strict_types=1);
 
 use common\models\Product;
+use backend\widgets\DatePicker;
+use kartik\grid\DataColumn;
+use kartik\grid\GridView;
 use yii\helpers\Html;
-use yii\grid\GridView;
 
 /* @var yii\web\View $this */
 /* @var backend\models\ProductSearch $searchModel */
@@ -41,8 +43,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Yii::$app->converter->getData($row->currency)['Name'];
                 },
                 'format' => 'raw',
+                'filter' => Yii::$app->converter->currencies(),
             ],
-            'created_at',
+            [
+                'class' => DataColumn::class,
+                'label' => 'Дата создания',
+                'attribute' => 'created_at',
+                'filterType' => DatePicker::class,
+                'format' => 'datetime',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -3,13 +3,7 @@ declare(strict_types=1);
 
 namespace common\models;
 
-use app\components\history\behaviors\HistoryBehavior;
-use app\components\history\storage\ActiveRecordStorage;
-use app\models\address\AddressHistory;
-use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
-use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "product".
@@ -18,8 +12,8 @@ use yii\helpers\ArrayHelper;
  * @property string $title Название
  * @property float|null $price Цена
  * @property string $currency Валюта
- * @property string $created_at Создано
- * @property string $updated_at Обновлено
+ * @property int $created_at Создано
+ * @property int $updated_at Обновлено
  *
  * @property Invoice[] $invoices
  */
@@ -68,10 +62,7 @@ class Product extends \yii\db\ActiveRecord
     public function behaviors() : array
     {
         return [
-            TimestampBehavior::class => [
-                'class' => TimestampBehavior::class,
-                'value' => new Expression('NOW()'),
-            ],
+            TimestampBehavior::class,
         ];
     }
 

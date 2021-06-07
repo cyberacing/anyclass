@@ -18,8 +18,8 @@ class m210604_182341_product extends Migration
             'title' => $this->string()->notNull()->comment('Название'),
             'price' => $this->float()->comment('Цена'),
             'currency' => $this->string(3)->notNull()->comment('Валюта'),
-            'created_at' => $this->dateTime()->notNull()->comment('Создано'),
-            'updated_at' => $this->dateTime()->notNull()->comment('Обновлено'),
+            'created_at' => $this->integer()->notNull()->comment('Создано'),
+            'updated_at' => $this->integer()->notNull()->comment('Обновлено'),
         ]);
 
         return true;

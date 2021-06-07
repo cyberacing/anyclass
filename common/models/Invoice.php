@@ -6,7 +6,6 @@ namespace common\models;
 use Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use yii\db\Expression;
 
 /**
  * This is the model class for table "invoice".
@@ -16,8 +15,8 @@ use yii\db\Expression;
  * @property int $user_id Пользователь
  * @property float|null $amount Сумма чека
  * @property string $currency Валюта чека
- * @property string $created_at Создано
- * @property string $updated_at Обновлено
+ * @property int $created_at Создано
+ * @property int $updated_at Обновлено
  *
  * @property Product $product
  * @property User $user
@@ -27,7 +26,7 @@ class Invoice extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName() : string
+    public static function tableName()
     {
         return 'invoice';
     }
@@ -35,7 +34,7 @@ class Invoice extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules() : array
+    public function rules()
     {
         return [
             [['product_id', 'user_id', 'currency'], 'required'],
@@ -71,10 +70,7 @@ class Invoice extends ActiveRecord
     public function behaviors() : array
     {
         return [
-            TimestampBehavior::class => [
-                'class' => TimestampBehavior::class,
-                'value' => new Expression('NOW()'),
-            ],
+            TimestampBehavior::class,
         ];
     }
 
